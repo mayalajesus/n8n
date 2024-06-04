@@ -1,4 +1,4 @@
-import type { User } from '@db/entities/User';
+import type { AuthUser } from '@db/entities/AuthUser';
 
 import { createSuccessfulExecution, getAllExecutions } from './shared/db/executions';
 import { createMember, createOwner } from './shared/db/users';
@@ -10,13 +10,13 @@ import { WaitTracker } from '@/WaitTracker';
 
 const testServer = setupTestServer({ endpointGroups: ['executions'] });
 
-let owner: User;
-let member: User;
+let owner: AuthUser;
+let member: AuthUser;
 
 // This is necessary for the tests to shutdown cleanly.
 mockInstance(WaitTracker);
 
-const saveExecution = async ({ belongingTo }: { belongingTo: User }) => {
+const saveExecution = async ({ belongingTo }: { belongingTo: AuthUser }) => {
 	const workflow = await createWorkflow({}, belongingTo);
 	return await createSuccessfulExecution(workflow);
 };
